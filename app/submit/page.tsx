@@ -1,13 +1,32 @@
 "use client"
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import React from 'react'
 import { useForm } from 'react-hook-form'
 
+type FormData = {
+    projectName: string;
+    mainFeature: string;
+    failureReason: string;
+    lesson: string;
+    founder: string;
+    link?: string;
+};
+
 export default function page() {
-    const {register, handleSubmit} = useForm();
-    const onSubmit = (d: any) => {
-        alert(JSON.stringify(d));
+    const {register, handleSubmit, reset} = useForm<FormData>();
+    const onSubmit = async (failedProject: FormData) => {
+        try {
+            const res = await fetch('/api/submit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(failedProject),
+            });
+            if (!res.ok) throw new Error('Failed to submit');
+            reset();
+            alert('Submitted!');
+        } catch (error) {
+            alert((error as Error).message);
+        }
     }
 
     return (

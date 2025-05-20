@@ -10,7 +10,7 @@ export default function Navbar() {
             <h1 className="text-4xl">IndieFails</h1>
         </div>
         <div>
-            <Link href="/submitfail"><Button>Submit</Button></Link>
+            <Link href="/submit"><Button>Submit</Button></Link>
         </div>
     </nav>
   )
