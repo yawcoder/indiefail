@@ -2,6 +2,7 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useForm } from 'react-hook-form'
+import Navbar from '../Navbar';
 
 type FormData = {
     projectName: string;
@@ -13,13 +14,13 @@ type FormData = {
 };
 
 export default function page() {
-    const {register, handleSubmit, reset} = useForm<FormData>();
-    const onSubmit = async (failedProject: FormData) => {
+    const { register, handleSubmit, reset } = useForm<FormData>();
+    const onSubmit = async (submittedProject: FormData) => {
         try {
             const res = await fetch('/api/submit', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(failedProject),
+                body: JSON.stringify(submittedProject),
             });
             if (!res.ok) throw new Error('Failed to submit');
             reset();
@@ -30,14 +31,17 @@ export default function page() {
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <Input type='text' {...register("projectName")} placeholder='Project Name' required/>
-            <Input type='text' {...register("mainFeature")} placeholder='What it was' required/>
-            <Input type='text' {...register("failureReason")} placeholder='Why it failed' required/>
-            <Input type='text' {...register("lesson")} placeholder='Key Lesson'required />
-            <Input type='text' {...register("founder")} placeholder='Name of Founder' required/>
-            <Input type='text' {...register("link")} placeholder='link to project (optional)' />
-            <Button type='submit'>Submit</Button>
-        </form>
+        <div>
+            <Navbar />
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <Input type='text' {...register("projectName")} placeholder='Project Name' required />
+                <Input type='text' {...register("mainFeature")} placeholder='What it was' required />
+                <Input type='text' {...register("failureReason")} placeholder='Why it failed' required />
+                <Input type='text' {...register("lesson")} placeholder='Key Lesson' required />
+                <Input type='text' {...register("founder")} placeholder='Name of Founder' required />
+                <Input type='text' {...register("link")} placeholder='link to project (optional)' />
+                <Button type='submit'>Submit</Button>
+            </form>
+        </div>
     )
 }

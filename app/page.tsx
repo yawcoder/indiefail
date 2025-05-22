@@ -4,34 +4,35 @@ import SingleCard from "./SingleCard";
 
 interface SingleFailProps {
   id: number;
-  name: string;
-  why: string;
+  projectName: string;
+  founder: string;
+  mainFeature: string;
+  failureReason: string;
   lesson: string;
   link: string;
   more: string;
 }
 
-const singlefail: SingleFailProps[] = [
-  {
-    id: 1,
-    name: "NomadNotes",
-    why: "No one paid for it",
-    lesson: "validate pricing before building",
-    link: "https://x.com",
-    more: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quia dolore porro ab ducimus, voluptatem eos aliquam fuga eum labore aut rerum culpa quo repellendus ipsa asperiores vero. Dignissimos, illum libero!"
-  }
-]
+
+async function getFails(): Promise<SingleFailProps[]> {
+  const res = await fetch("http://localhost:3000/api/fails", {cache: "no-store"});
+  return res.json();
+}
 
 
-export default function page() {
+
+
+export default async function page() {
+  const fails = await getFails();
+
   return (
     <div className="w-full">
       <Navbar />
       <Search />
       <div className="p-5">
-        {singlefail.map((e) => {
+        {fails.map((e) => {
           return (
-            <SingleCard key={e.id} name={e.name} why={e.why} lesson={e.lesson} link={e.link} more={e.more} />
+            <SingleCard key={e.id} feature={e.mainFeature} name={e.projectName} why={e.failureReason} lesson={e.lesson} link={e.link} more={e.founder} founder={e.founder} />
           )
         })}
       </div>
