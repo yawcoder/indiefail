@@ -5,7 +5,7 @@ interface SingleCardProps {
     feature: string;
     why: string;
     lesson: string;
-    link: string;
+    link?: string;
     founder: string;
     more: string;
 }

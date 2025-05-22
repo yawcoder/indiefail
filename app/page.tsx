@@ -9,7 +9,7 @@ interface SingleFailProps {
   mainFeature: string;
   failureReason: string;
   lesson: string;
-  link: string;
+  link?: string;
   more: string;
 }
 
