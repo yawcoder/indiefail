@@ -14,7 +14,7 @@ type FormData = {
     projectUrl?: string;
     details: string;
     slug: string;
-    date: Date;
+    dateSubmitted: Date;
 };
 
 function slugify(text: string) {
@@ -28,9 +28,9 @@ export default function page() {
     const { register, handleSubmit, reset } = useForm<FormData>();
     const onSubmit = async (submittedProject: FormData) => {
 
-        const date = new Date()
-        const slug = slugify(`${submittedProject.projectName}-${submittedProject.founder}-${date.getUTCDate()}-${date.getUTCMonth()}-${date.getUTCFullYear()}-${date.getUTCHours()}-${date.getUTCMinutes()}-${date.getUTCSeconds()}`)
-        const datawithSlug = {...submittedProject,date,slug}
+        const dateSubmitted = new Date()
+        const slug = slugify(`${submittedProject.projectName}-${submittedProject.founder}-${dateSubmitted.getUTCDate()}-${dateSubmitted.getUTCMonth()}-${dateSubmitted.getUTCFullYear()}-${dateSubmitted.getUTCHours()}-${dateSubmitted.getUTCMinutes()}-${dateSubmitted.getUTCSeconds()}`)
+        const datawithSlug = {...submittedProject,dateSubmitted,slug}
         try {
             const res = await fetch('/api/submit', {
                 method: 'POST',
