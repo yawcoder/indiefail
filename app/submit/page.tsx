@@ -1,4 +1,5 @@
 "use client"
+import { useState } from 'react';
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useForm } from 'react-hook-form'
@@ -26,11 +27,13 @@ function slugify(text: string) {
 
 export default function page() {
     const { register, handleSubmit, reset } = useForm<FormData>();
-    const onSubmit = async (submittedProject: FormData) => {
+    const [loading, setLoading] = useState(false);
 
-        const dateSubmitted = new Date()
-        const slug = slugify(`${submittedProject.projectName}-${submittedProject.founder}-${dateSubmitted.getUTCDate()}-${dateSubmitted.getUTCMonth()}-${dateSubmitted.getUTCFullYear()}-${dateSubmitted.getUTCHours()}-${dateSubmitted.getUTCMinutes()}-${dateSubmitted.getUTCSeconds()}`)
-        const datawithSlug = {...submittedProject,dateSubmitted,slug}
+    const onSubmit = async (submittedProject: FormData) => {
+        setLoading(true);
+        const dateSubmitted = new Date();
+        const slug = slugify(`${submittedProject.projectName}-${submittedProject.founder}-${dateSubmitted.getUTCDate()}-${dateSubmitted.getUTCMonth()}-${dateSubmitted.getUTCFullYear()}-${dateSubmitted.getUTCHours()}-${dateSubmitted.getUTCMinutes()}-${dateSubmitted.getUTCSeconds()}`);
+        const datawithSlug = { ...submittedProject, dateSubmitted, slug };
         try {
             const res = await fetch('/api/submit', {
                 method: 'POST',
@@ -42,12 +45,19 @@ export default function page() {
             alert('Submitted!');
         } catch (error) {
             alert((error as Error).message);
+        } finally {
+            setLoading(false);
         }
     }
 
     return (
         <div>
             <Navbar />
+            {loading && (
+                <div className="w-full h-1 bg-gray-200">
+                    <div className="h-1 bg-blue-500 animate-pulse w-full" />
+                </div>
+            )}
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2 p-5">
                 <Input type='text' {...register("projectName")} placeholder='Project Name' required />
                 <Input type='text' {...register("mainFeature")} placeholder='What it was' required />
@@ -56,7 +66,7 @@ export default function page() {
                 <Input type='text' {...register("founder")} placeholder='Name of Founder' required />
                 <Input type='text' {...register("projectUrl")} placeholder='link to project (optional)' />
                 <Textarea {...register("details")} className="h-40" placeholder="Give details as to what the project was and why it failed (Recommended)" />
-                <Button type='submit'>Submit</Button>
+                <Button type='submit' disabled={loading}>Submit</Button>
             </form>
         </div>
     )

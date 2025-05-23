@@ -2,6 +2,7 @@ import Link from "next/link";
 import Navbar from "./Navbar";
 import Search from "./Search";
 import SingleCard from "./SingleCard";
+import Footer from "./Footer";
 
 interface SingleFailProps {
   id: number;
@@ -36,6 +37,7 @@ export default async function page() {
           )
         })}
       </div>
+      <Footer />
     </div>
   )
 }
