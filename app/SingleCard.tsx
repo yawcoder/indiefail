@@ -1,4 +1,5 @@
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import Link from "next/link";
 
 interface SingleCardProps {
     name: string;
@@ -7,12 +8,12 @@ interface SingleCardProps {
     lesson: string;
     link?: string;
     founder: string;
-    more: string;
+    slug: string;
 }
 
-export default function SingleCard({ name, feature, why, lesson, link, founder, more }: SingleCardProps) {
+export default function SingleCard({ name, feature, why, lesson, founder, slug }: SingleCardProps) {
     return (
-        <Card>
+        <Card className="mt-5">
             <CardHeader>
                 <CardTitle>{name}</CardTitle>
             </CardHeader>
@@ -21,10 +22,9 @@ export default function SingleCard({ name, feature, why, lesson, link, founder, 
                 <p><span className="font-black">Why it failed: </span>{why}</p>
                 <p><span className="font-black">Lesson: </span>{lesson}</p>
                 <p><span className="font-black">Founder: </span>{founder}</p>
-                <p><span className="font-black">Link: </span>{link}</p>
             </CardContent>
             <CardFooter>
-                <a href={more}>Read More</a>
+                <Link href={slug}>Read More</Link>
             </CardFooter>
         </Card>
     )
