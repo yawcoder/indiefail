@@ -15,7 +15,7 @@ type Project = {
     details: string;
 };
 
-type PageProps = {
+type Props = {
     params: {
         slug: string;
     };
@@ -40,7 +40,7 @@ async function getProjectBySlug(slug: string): Promise<Project | null> {
     };
 }
 
-export default async function Page({ params }: PageProps) {
+export default async function Page({ params }: Props) {
     const project = await getProjectBySlug(params.slug);
 
     if (!project) return notFound();
