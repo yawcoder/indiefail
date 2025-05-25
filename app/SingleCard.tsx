@@ -13,18 +13,35 @@ interface SingleCardProps {
 
 export default function SingleCard({ name, feature, why, lesson, founder, slug }: SingleCardProps) {
     return (
-        <Card className="mt-5">
+        <Card className="w-full shadow-md hover:shadow-lg transition-shadow duration-200">
             <CardHeader>
-                <CardTitle>{name}</CardTitle>
+                <CardTitle className="text-xl md:text-2xl lg:text-3xl font-bold">{name}</CardTitle>
             </CardHeader>
-            <CardContent>
-                <p><span className="font-black">Main Feature: </span>{feature}</p>
-                <p><span className="font-black">Why it failed: </span>{why}</p>
-                <p><span className="font-black">Lesson: </span>{lesson}</p>
-                <p><span className="font-black">Founder: </span>{founder}</p>
+            <CardContent className="space-y-2 text-base md:text-lg">
+                <p>
+                    <span className="font-black text-gray-700">Main Feature: </span>
+                    <span className="text-gray-800">{feature}</span>
+                </p>
+                <p>
+                    <span className="font-black text-gray-700">Why it failed: </span>
+                    <span className="text-gray-800">{why}</span>
+                </p>
+                <p>
+                    <span className="font-black text-gray-700">Lesson: </span>
+                    <span className="text-gray-800">{lesson}</span>
+                </p>
+                <p>
+                    <span className="font-black text-gray-700">Founder: </span>
+                    <span className="text-gray-800">{founder}</span>
+                </p>
             </CardContent>
-            <CardFooter>
-                <Link href={slug}>Read More</Link>
+            <CardFooter className="flex justify-end">
+                <Link
+                    href={`/${slug}`}
+                    className="px-4 py-2 rounded bg-blue-600 text-white text-sm md:text-base hover:bg-blue-700 transition-colors"
+                >
+                    Read More
+                </Link>
             </CardFooter>
         </Card>
     )

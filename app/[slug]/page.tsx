@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Navbar from "../Navbar";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "@/lib/firebaseConfig";
+import Footer from "../Footer";
 
 type Project = {
     id: string;
@@ -39,26 +40,45 @@ export default async function Page({ params }: { params: { slug: string } }) {
     if (!project) return notFound();
 
     return (
-        <div>
+        <div className="min-h-screen bg-gray-50">
             <Navbar />
-            <div className="max-w-2xl mx-auto p-6">
-                <h1 className="text-3xl font-bold mb-2">{project.projectName}</h1>
-                <p className="text-gray-600 mb-4">By {project.founder}</p>
-                <p className="mb-2"><strong>Main Feature:</strong> {project.mainFeature}</p>
-                <p className="mb-2"><strong>Why it failed:</strong> {project.failureReason}</p>
-                <p className="mb-2"><strong>Lesson:</strong> {project.lesson}</p>
-                {project.projectUrl && (
-                    <p className="mb-2">
-                        <a href={project.projectUrl} className="text-blue-600 underline" target="_blank" rel="noopener noreferrer">
-                            Project Link
-                        </a>
-                    </p>
-                )}
-                <div className="mt-4">
-                    <h2 className="text-xl font-semibold mb-1">Details</h2>
-                    <p>{project.details}</p>
+            <div className="max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto mt-10 bg-white rounded-lg shadow-lg p-6 md:p-10">
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-center">{project.projectName}</h1>
+                <p className="text-gray-600 mb-6 text-center text-base md:text-lg">By <span className="font-semibold">{project.founder}</span></p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <p className="mb-3">
+                            <span className="font-black text-gray-700">Main Feature: </span>
+                            <span className="text-gray-800">{project.mainFeature}</span>
+                        </p>
+                        <p className="mb-3">
+                            <span className="font-black text-gray-700">Why it failed: </span>
+                            <span className="text-gray-800">{project.failureReason}</span>
+                        </p>
+                        <p className="mb-3">
+                            <span className="font-black text-gray-700">Lesson: </span>
+                            <span className="text-gray-800">{project.lesson}</span>
+                        </p>
+                        {project.projectUrl && (
+                            <p className="mb-3">
+                                <a
+                                    href={project.projectUrl}
+                                    className="text-blue-600 underline"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    Project Link
+                                </a>
+                            </p>
+                        )}
+                    </div>
+                    <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                        <h2 className="text-xl font-semibold mb-2">Details</h2>
+                        <p className="text-gray-700 whitespace-pre-line">{project.details}</p>
+                    </div>
                 </div>
             </div>
+            <Footer />
         </div>
     );
 }
