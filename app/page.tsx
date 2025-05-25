@@ -14,7 +14,7 @@ interface SingleFailProps {
 }
 
 async function getFails(): Promise<SingleFailProps[]> {
-  const res = await fetch("http://localhost:3000/api/fails", { cache: "no-store" });
+  const res = await fetch("https://indiefails.vercel.app/api/fails", { cache: "no-store" });
   return res.json();
 }
 
