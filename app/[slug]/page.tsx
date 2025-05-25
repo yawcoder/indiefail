@@ -15,6 +15,12 @@ type Project = {
     details: string;
 };
 
+type PageProps = {
+    params: {
+        slug: string;
+    };
+}
+
 async function getProjectBySlug(slug: string): Promise<Project | null> {
     const failsCollectionRef = collection(db, "fails");
     const q = query(failsCollectionRef, where("slug", "==", slug));
@@ -34,7 +40,7 @@ async function getProjectBySlug(slug: string): Promise<Project | null> {
     };
 }
 
-export default async function Page({ params }: {params: {slug: string}}) {
+export default async function Page({ params }: PageProps) {
     const project = await getProjectBySlug(params.slug);
 
     if (!project) return notFound();
