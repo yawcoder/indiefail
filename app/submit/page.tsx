@@ -30,7 +30,7 @@ function slugify(text: string) {
         .replace(/^-+|-+$/g, '')     // Trim hyphens from start/end
 }
 
-export default function page() {
+export default function Page() {
     const { register, handleSubmit, reset } = useForm<FormData>();
     const [loading, setLoading] = useState(false);
     const [alertBox, setAlertBox] = useState(false);
@@ -83,7 +83,7 @@ export default function page() {
                             htmlFor="newsletter"
                             className="text-sm text-gray-700 select-none cursor-pointer"
                         >
-                            Yes, I want emails about fails, lessons, and whatever you're building next.
+                            Yes, I want emails about fails, lessons, and whatever you&apos;re building next.
                         </label>
                     </div>
                     <Textarea {...register("details")} className="h-32 bg-gray-100" placeholder="Give details as to what the project was and why it failed (Recommended)" />

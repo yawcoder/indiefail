@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Navbar from "./Navbar";
 import Search from "./Search";
 import SingleCard from "./SingleCard";
