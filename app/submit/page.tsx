@@ -37,6 +37,7 @@ export default function Page() {
 
     const onSubmit = async (submittedProject: FormData) => {
         setLoading(true);
+        // console.log(submittedProject.email)
         const dateSubmitted = new Date();
         const slug = slugify(`${submittedProject.projectName}-${submittedProject.founder}-${dateSubmitted.getUTCDate()}-${dateSubmitted.getUTCMonth()}-${dateSubmitted.getUTCFullYear()}-${dateSubmitted.getUTCHours()}-${dateSubmitted.getUTCMinutes()}-${dateSubmitted.getUTCSeconds()}`);
         const datawithSlug = { ...submittedProject, dateSubmitted, slug };
@@ -48,7 +49,16 @@ export default function Page() {
             });
             if (!res.ok) throw new Error('Failed to submit');
             reset();
-            setAlertBox(true)
+            setAlertBox(true);
+
+            if (submittedProject.newsletterOptIn === "on") {
+                const emailRes = await fetch('/api/subscribe', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: submittedProject.email }),
+                });
+                if (!emailRes.ok) throw new Error('Failed to Submit Email');
+            }
         } catch (error) {
             alert((error as Error).message);
         } finally {
