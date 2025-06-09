@@ -27,8 +27,6 @@ export async function POST(req: NextRequest) {
             method: 'POST',
         });
 
-        const result = await response.json();
-        // console.log(result);
 
         if (response.status == 200) {
             return NextResponse.json({ message: successMessage });
