@@ -22,7 +22,7 @@ export default function Footer() {
             Twitter
           </a>
         </div>
-        <span className="text-sm text-gray-500">Built by Isaac Boamah Anim</span>
+        <span className="text-sm text-gray-500">Built by <a href="https://isaacanim.com">Isaac Boamah Anim</a></span>
       </div>
     </footer>
   );
